@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingViewController" customModule="Pexels" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="bTH-IB-Lhq" id="ffo-nP-Up1"/>
+                <outlet property="nextButton" destination="Ock-27-PYF" id="GGs-oN-szv"/>
+                <outlet property="pageControl" destination="pNU-QU-FHv" id="9gE-v6-upc"/>
+                <outlet property="skipButton" destination="eB0-Hq-gGY" id="bBL-fv-7Mp"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="bTH-IB-Lhq">
+                    <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zfH-uN-Edb">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eB0-Hq-gGY">
+                    <rect key="frame" x="-22" y="666" width="147" height="44"/>
+                    <color key="backgroundColor" red="0.27843137254901962" green="0.33725490196078434" blue="0.87450980392156863" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="nw6-lN-m2Q"/>
+                    </constraints>
+                    <inset key="contentEdgeInsets" minX="42" minY="0.0" maxX="20" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Пропустить">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="skipButtonClicked:" destination="-1" eventType="touchUpInside" id="KRq-E7-KVw"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ock-27-PYF">
+                    <rect key="frame" x="240.66666666666663" y="661" width="176.33333333333337" height="54"/>
+                    <color key="backgroundColor" red="0.27843137254901962" green="0.33725490196078434" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="54" id="rTS-OJ-4yL"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                    <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="47" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Дальше">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="nextButtonClicked:" destination="-1" eventType="touchUpInside" id="gvH-lP-2tW"/>
+                    </connections>
+                </button>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="pNU-QU-FHv">
+                    <rect key="frame" x="0.0" y="603" width="390" height="26"/>
+                    <color key="pageIndicatorTintColor" red="0.2784313725" green="0.33725490200000002" blue="0.87450980389999999" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <color key="currentPageIndicatorTintColor" red="0.2784313725" green="0.33725490200000002" blue="0.87450980389999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                </pageControl>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="pNU-QU-FHv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="3lj-3e-s8f"/>
+                <constraint firstItem="bTH-IB-Lhq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="LWA-Uc-UyH"/>
+                <constraint firstItem="bTH-IB-Lhq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Mh3-Go-fEP"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="eB0-Hq-gGY" secondAttribute="bottom" constant="100" id="Pxn-vE-AIo"/>
+                <constraint firstItem="Ock-27-PYF" firstAttribute="width" secondItem="eB0-Hq-gGY" secondAttribute="width" multiplier="1.2" id="PzB-vS-XMd"/>
+                <constraint firstItem="Ock-27-PYF" firstAttribute="centerY" secondItem="eB0-Hq-gGY" secondAttribute="centerY" id="Q71-i3-a5H"/>
+                <constraint firstItem="bTH-IB-Lhq" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="cYf-Sl-htV"/>
+                <constraint firstAttribute="bottom" secondItem="bTH-IB-Lhq" secondAttribute="bottom" id="hKR-N1-0RX"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pNU-QU-FHv" secondAttribute="trailing" id="jS4-Za-2YE"/>
+                <constraint firstItem="eB0-Hq-gGY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="-22" id="kA4-HY-kGy"/>
+                <constraint firstItem="Ock-27-PYF" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="27" id="sTC-AI-u88"/>
+                <constraint firstItem="Ock-27-PYF" firstAttribute="top" secondItem="pNU-QU-FHv" secondAttribute="bottom" constant="32" id="zSu-QB-yg6"/>
+            </constraints>
+            <point key="canvasLocation" x="16.923076923076923" y="20.616113744075829"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
