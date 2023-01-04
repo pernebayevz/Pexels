@@ -24,7 +24,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if userDidSeeOnboarding {
             
-            window?.rootViewController = MainViewController()
+            let mainVC = MainViewController()
+            let navC = UINavigationController(rootViewController: mainVC)
+            
+            window?.rootViewController = navC
             
         } else {
             

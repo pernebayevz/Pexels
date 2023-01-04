@@ -77,7 +77,8 @@ class OnboardingViewController: UIViewController {
         UserDefaults.standard.set(true, forKey: OnboardingViewController.KEY)
         
         let mainVC = MainViewController()
-        view.window?.rootViewController = mainVC
+        let navC = UINavigationController(rootViewController: mainVC)
+        view.window?.rootViewController = navC
         view.window?.makeKeyAndVisible()
     }
     

@@ -11,6 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="Pexels" customModuleProvider="target">
             <connections>
+                <outlet property="imageCollectionView" destination="kKR-iz-flQ" id="Hhf-aw-qC9"/>
+                <outlet property="searchBar" destination="zwd-xK-dqB" id="FS2-1X-pKV"/>
+                <outlet property="searchHistoryCollectionView" destination="cQd-2B-rPO" id="QSa-dC-WEg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,8 +21,52 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <searchBar contentMode="redraw" placeholder="поиск изображений" translatesAutoresizingMaskIntoConstraints="NO" id="zwd-xK-dqB">
+                    <rect key="frame" x="0.0" y="59" width="393" height="56"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="61f-qF-vpt"/>
+                    </connections>
+                </searchBar>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="cQd-2B-rPO">
+                    <rect key="frame" x="0.0" y="115" width="393" height="60"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="QNc-d5-w6s"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9BJ-fK-Zp5">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="kKR-iz-flQ">
+                    <rect key="frame" x="0.0" y="175" width="393" height="643"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WnC-rh-ghy">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="cQd-2B-rPO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="7Xl-Mz-N0p"/>
+                <constraint firstItem="zwd-xK-dqB" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="DA5-Pw-dWB"/>
+                <constraint firstItem="kKR-iz-flQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="H3h-qJ-G1D"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kKR-iz-flQ" secondAttribute="trailing" id="IcP-uJ-0OU"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="kKR-iz-flQ" secondAttribute="bottom" id="LaB-b8-Mzz"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cQd-2B-rPO" secondAttribute="trailing" id="NIW-mW-eSr"/>
+                <constraint firstItem="zwd-xK-dqB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="fw3-i2-Qsu"/>
+                <constraint firstItem="kKR-iz-flQ" firstAttribute="top" secondItem="cQd-2B-rPO" secondAttribute="bottom" id="pxs-d0-HTQ"/>
+                <constraint firstItem="cQd-2B-rPO" firstAttribute="top" secondItem="zwd-xK-dqB" secondAttribute="bottom" id="q2L-BP-OxY"/>
+                <constraint firstItem="zwd-xK-dqB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="qOw-lr-vPr"/>
+            </constraints>
             <point key="canvasLocation" x="61.832061068702288" y="19.718309859154932"/>
         </view>
     </objects>
