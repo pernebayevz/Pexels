@@ -71,6 +71,31 @@ class MainViewController: UIViewController {
     
     func searchPhotosHandler(data: Data?, urlResponse: URLResponse?, error: Error?) {
         print("Method searchPhotosHandler was called")
+        
+        if let error = error {
+            
+            print("Search Photos endpoint error - \(error.localizedDescription)")
+            
+        } else if let data = data {
+            
+            do {
+             
+//                let jsonObject = try JSONSerialization.jsonObject(with: data)
+//                print("Search Photos endpoint jsonObject - \(jsonObject)")
+                let searchPhotosResponse = try JSONDecoder().decode(SearchPhotosResponse.self, from: data)
+                print("Search Photos endpoint searchPhotosResponse - \(searchPhotosResponse)")
+                
+            } catch let error {
+                print("Search Photos endpoint serialization error - \(error.localizedDescription)")
+            }
+            
+        }
+        
+        if let urlResponse = urlResponse, let httpResponse = urlResponse as? HTTPURLResponse {
+            
+            print("Search Photos endpoint http response status code - \(httpResponse.statusCode)")
+            
+        }
     }
 }
 
