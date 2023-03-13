@@ -13,6 +13,17 @@ class MainViewController: UIViewController {
     @IBOutlet weak var searchHistoryCollectionView: UICollectionView!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
+    var searchPhotosResponse: SearchPhotosResponse? {
+        didSet {
+            DispatchQueue.main.async {
+                self.imageCollectionView.reloadData()
+            }
+        }
+    }
+    var photos: [Photo] {
+        return searchPhotosResponse?.photos ?? []
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +31,12 @@ class MainViewController: UIViewController {
         navigationItem.title = "Pexels"
         
         searchBar.delegate = self
+        
+        // Image CollectionView SETUP
+        imageCollectionView.contentInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
+        imageCollectionView.register(UINib(nibName: PhotoCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
+        imageCollectionView.dataSource = self
+        imageCollectionView.delegate = self
     }
 
     func search() {
@@ -84,6 +101,7 @@ class MainViewController: UIViewController {
 //                print("Search Photos endpoint jsonObject - \(jsonObject)")
                 let searchPhotosResponse = try JSONDecoder().decode(SearchPhotosResponse.self, from: data)
                 print("Search Photos endpoint searchPhotosResponse - \(searchPhotosResponse)")
+                self.searchPhotosResponse = searchPhotosResponse
                 
             } catch let error {
                 print("Search Photos endpoint serialization error - \(error.localizedDescription)")
@@ -116,5 +134,34 @@ extension MainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         search()
+    }
+}
+
+extension MainViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
+        return cell
+    }
+}
+
+extension MainViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let flowLayout: UICollectionViewFlowLayout?  = collectionViewLayout as? UICollectionViewFlowLayout
+        let horizontalSpacing: CGFloat = ( flowLayout?.minimumInteritemSpacing ?? 0 ) + collectionView.contentInset.left + collectionView.contentInset.right
+        let width: CGFloat = ( collectionView.frame.width - horizontalSpacing ) / 2
+        let height: CGFloat = width
+        
+        return CGSize(width: width, height: height)
     }
 }
