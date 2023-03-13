@@ -23,6 +23,12 @@ class MainViewController: UIViewController {
     var photos: [Photo] {
         return searchPhotosResponse?.photos ?? []
     }
+    let savedSearchTextArrayKey: String = "savedSearchTextArrayKey"
+    var searchTextArray: [String] = [] {
+        didSet {
+            searchHistoryCollectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +45,15 @@ class MainViewController: UIViewController {
         imageCollectionView.delegate = self
         imageCollectionView.refreshControl = UIRefreshControl()
         imageCollectionView.refreshControl!.addTarget(self, action: #selector(search), for: .valueChanged)
+        
+        // Search History CollectionView SETUP
+        let flowLayout = searchHistoryCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        flowLayout?.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        searchHistoryCollectionView.register(UINib(nibName: SearchTextCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: SearchTextCollectionViewCell.identifier)
+        searchHistoryCollectionView.dataSource = self
+        
+        searchTextArray = getSaveSearchTextArray()
     }
 
     @objc
@@ -53,6 +68,9 @@ class MainViewController: UIViewController {
             print("Search bar text is empty")
             return
         }
+        
+        // Save Searching Text
+        save(searchText: searchText)
         
         let endpoint: String = "https://api.pexels.com/v1/search"
         guard var urlComponents = URLComponents(string: endpoint) else {
@@ -130,6 +148,20 @@ class MainViewController: UIViewController {
             
         }
     }
+    
+    func save(searchText: String) {
+        var existingArray: [String] = getSaveSearchTextArray()
+        existingArray.append(searchText)
+        
+        UserDefaults.standard.set(existingArray, forKey: savedSearchTextArrayKey)
+        
+        searchTextArray = existingArray
+    }
+    
+    func getSaveSearchTextArray() -> [String] {
+        let array: [String] = UserDefaults.standard.stringArray(forKey: savedSearchTextArrayKey) ?? []
+        return array
+    }
 }
 
 extension MainViewController: UISearchBarDelegate {
@@ -159,13 +191,37 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        
+        switch collectionView {
+        case imageCollectionView:
+            return photos.count
+            
+        case searchHistoryCollectionView:
+            return searchTextArray.count
+            
+        default:
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
-        cell.setup(photo: self.photos[indexPath.item])
-        return cell
+        
+        switch collectionView {
+        case imageCollectionView:
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
+            cell.setup(photo: self.photos[indexPath.item])
+            return cell
+            
+        case searchHistoryCollectionView:
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchTextCollectionViewCell.identifier, for: indexPath) as! SearchTextCollectionViewCell
+            cell.set(title: searchTextArray[indexPath.item])
+            return cell
+            
+        default:
+            return UICollectionViewCell()
+        }
     }
 }
 
