@@ -21,23 +21,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="167" height="151"/>
                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </imageView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="E0u-6I-4fU">
+                        <rect key="frame" x="73.666666666666671" y="65.666666666666671" width="20" height="20"/>
+                        <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </activityIndicatorView>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
+                <constraint firstItem="E0u-6I-4fU" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="SgZ-U0-I2s"/>
                 <constraint firstAttribute="bottom" secondItem="zA4-B0-khX" secondAttribute="bottom" id="cnh-fF-gJE"/>
                 <constraint firstItem="zA4-B0-khX" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="gja-FI-aRE"/>
                 <constraint firstItem="zA4-B0-khX" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="hGV-UU-JGq"/>
                 <constraint firstAttribute="trailing" secondItem="zA4-B0-khX" secondAttribute="trailing" id="w0M-fB-wu4"/>
+                <constraint firstItem="E0u-6I-4fU" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="xHd-c9-d0Q"/>
             </constraints>
             <size key="customSize" width="167" height="151"/>
             <connections>
+                <outlet property="activityIndicatorView" destination="E0u-6I-4fU" id="RQw-1v-TbO"/>
                 <outlet property="imageView" destination="zA4-B0-khX" id="bES-Nz-hZ0"/>
             </connections>
             <point key="canvasLocation" x="115.26717557251908" y="55.985915492957751"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="image_placeholder" width="170" height="170"/>
+        <image name="image_placeholder" width="170.66667175292969" height="170.66667175292969"/>
     </resources>
 </document>

@@ -37,9 +37,14 @@ class MainViewController: UIViewController {
         imageCollectionView.register(UINib(nibName: PhotoCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
         imageCollectionView.dataSource = self
         imageCollectionView.delegate = self
+        imageCollectionView.refreshControl = UIRefreshControl()
+        imageCollectionView.refreshControl!.addTarget(self, action: #selector(search), for: .valueChanged)
     }
 
+    @objc
     func search() {
+        self.searchPhotosResponse = nil
+        
         guard let searchText = searchBar.text else {
             print("Search bar text is nil")
             return
@@ -57,7 +62,7 @@ class MainViewController: UIViewController {
         
         let parameters = [
             URLQueryItem(name: "query", value: searchText),
-            URLQueryItem(name: "per_page", value: "10")
+            URLQueryItem(name: "per_page", value: "20")
         ]
         urlComponents.queryItems = parameters
         
@@ -79,6 +84,10 @@ class MainViewController: UIViewController {
 //        ]
 //        urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
         
+        if imageCollectionView.refreshControl?.isRefreshing == false {
+            imageCollectionView.refreshControl?.beginRefreshing()
+        }
+        
         let urlSession: URLSession = URLSession(configuration: .default)
         let dataTask: URLSessionDataTask = urlSession.dataTask(with: urlRequest, completionHandler: searchPhotosHandler(data:urlResponse:error:))
         
@@ -88,6 +97,12 @@ class MainViewController: UIViewController {
     
     func searchPhotosHandler(data: Data?, urlResponse: URLResponse?, error: Error?) {
         print("Method searchPhotosHandler was called")
+        
+        DispatchQueue.main.async {
+            if self.imageCollectionView.refreshControl?.isRefreshing == true {
+                self.imageCollectionView.refreshControl?.endRefreshing()
+            }
+        }
         
         if let error = error {
             
@@ -149,6 +164,7 @@ extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
+        cell.setup(photo: self.photos[indexPath.item])
         return cell
     }
 }
