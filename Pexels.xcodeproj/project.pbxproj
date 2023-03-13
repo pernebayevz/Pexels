@@ -21,6 +21,8 @@
 		0D9C30FB295329F800CBD98A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D9C30F9295329F800CBD98A /* LaunchScreen.storyboard */; };
 		0DAFF2DC2965977000CB359D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAFF2DA2965977000CB359D /* MainViewController.swift */; };
 		0DAFF2DD2965977000CB359D /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DAFF2DB2965977000CB359D /* MainViewController.xib */; };
+		0DE72FDE29BF5B5400336CB3 /* ImageScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE72FDC29BF5B5400336CB3 /* ImageScrollViewController.swift */; };
+		0DE72FDF29BF5B5400336CB3 /* ImageScrollViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DE72FDD29BF5B5400336CB3 /* ImageScrollViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		0D9C30FC295329F800CBD98A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0DAFF2DA2965977000CB359D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		0DAFF2DB2965977000CB359D /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		0DE72FDC29BF5B5400336CB3 /* ImageScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollViewController.swift; sourceTree = "<group>"; };
+		0DE72FDD29BF5B5400336CB3 /* ImageScrollViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageScrollViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,8 @@
 				0D97F3F929A79FB500530A89 /* SearchPhotosResponse.swift */,
 				0D83ED3629BF15920000D760 /* PhotoCollectionViewCell.swift */,
 				0D83ED3729BF15920000D760 /* PhotoCollectionViewCell.xib */,
+				0DE72FDC29BF5B5400336CB3 /* ImageScrollViewController.swift */,
+				0DE72FDD29BF5B5400336CB3 /* ImageScrollViewController.xib */,
 			);
 			path = Pexels;
 			sourceTree = "<group>";
@@ -149,6 +155,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DE72FDF29BF5B5400336CB3 /* ImageScrollViewController.xib in Resources */,
 				0D9C30FB295329F800CBD98A /* LaunchScreen.storyboard in Resources */,
 				0D9C30F8295329F800CBD98A /* Assets.xcassets in Resources */,
 				0DAFF2DD2965977000CB359D /* MainViewController.xib in Resources */,
@@ -167,6 +174,7 @@
 			files = (
 				0D9C30EF295329F800CBD98A /* AppDelegate.swift in Sources */,
 				0D83ED3829BF15920000D760 /* PhotoCollectionViewCell.swift in Sources */,
+				0DE72FDE29BF5B5400336CB3 /* ImageScrollViewController.swift in Sources */,
 				0D49050C2953408C0094ECCA /* OnboardingModel.swift in Sources */,
 				0D49050529533B630094ECCA /* OnboardingViewController.swift in Sources */,
 				0DAFF2DC2965977000CB359D /* MainViewController.swift in Sources */,

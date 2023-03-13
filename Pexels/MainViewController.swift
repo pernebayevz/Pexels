@@ -180,4 +180,13 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         
         return CGSize(width: width, height: height)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let photo = self.photos[indexPath.item]
+        let url = photo.src.large2X
+        
+        let vc = ImageScrollViewController(imageURL: url)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
