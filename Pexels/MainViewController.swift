@@ -23,12 +23,7 @@ class MainViewController: UIViewController {
     var photos: [Photo] {
         return searchPhotosResponse?.photos ?? []
     }
-    let savedSearchTextArrayKey: String = "savedSearchTextArrayKey"
-    var searchTextArray: [String] = [] {
-        didSet {
-            searchHistoryCollectionView.reloadData()
-        }
-    }
+    var searchHistoryManager = SearchHistoryManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +48,7 @@ class MainViewController: UIViewController {
         searchHistoryCollectionView.register(UINib(nibName: SearchTextCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: SearchTextCollectionViewCell.identifier)
         searchHistoryCollectionView.dataSource = self
         
-        searchTextArray = getSaveSearchTextArray()
+        searchHistoryManager.delegate = self
     }
 
     @objc
@@ -70,7 +65,7 @@ class MainViewController: UIViewController {
         }
         
         // Save Searching Text
-        save(searchText: searchText)
+        searchHistoryManager.save(searchText: searchText)
         
         let endpoint: String = "https://api.pexels.com/v1/search"
         guard var urlComponents = URLComponents(string: endpoint) else {
@@ -148,20 +143,6 @@ class MainViewController: UIViewController {
             
         }
     }
-    
-    func save(searchText: String) {
-        var existingArray: [String] = getSaveSearchTextArray()
-        existingArray.append(searchText)
-        
-        UserDefaults.standard.set(existingArray, forKey: savedSearchTextArrayKey)
-        
-        searchTextArray = existingArray
-    }
-    
-    func getSaveSearchTextArray() -> [String] {
-        let array: [String] = UserDefaults.standard.stringArray(forKey: savedSearchTextArrayKey) ?? []
-        return array
-    }
 }
 
 extension MainViewController: UISearchBarDelegate {
@@ -197,7 +178,7 @@ extension MainViewController: UICollectionViewDataSource {
             return photos.count
             
         case searchHistoryCollectionView:
-            return searchTextArray.count
+            return searchHistoryManager.searchHistory.count
             
         default:
             return 0
@@ -216,7 +197,9 @@ extension MainViewController: UICollectionViewDataSource {
         case searchHistoryCollectionView:
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchTextCollectionViewCell.identifier, for: indexPath) as! SearchTextCollectionViewCell
-            cell.set(title: searchTextArray[indexPath.item])
+            let searchText = searchHistoryManager.searchHistory[indexPath.item]
+            cell.titleLabel.text = searchText
+            cell.set(title: searchText)
             return cell
             
         default:
@@ -244,5 +227,12 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         
         let vc = ImageScrollViewController(imageURL: url)
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension MainViewController: SearchHistoryManagerDelegate {
+    
+    func searchHistoryValueChanged() {
+        searchHistoryCollectionView.reloadData()
     }
 }
