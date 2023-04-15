@@ -53,6 +53,9 @@ class MainViewController: UIViewController {
         searchHistoryCollectionView.register(UINib(nibName: SearchTextCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: SearchTextCollectionViewCell.identifier)
         searchHistoryCollectionView.dataSource = self
         
+        // Обращаемся к свойству 'delegate' у 'searchHistoryCollectionView' и присваеваем обьект текущего класса, а именно экземпляр класса MainViewController. Иными словами, перенимаем ответственность, которая находится в протоколе UICollectionViewDelegate. Делается это с целью получения обратной связи, в нашем случае для обнаружения выбора ячейки.
+        searchHistoryCollectionView.delegate = self
+        
         // Теперь для переопределения значения свойства 'searchTextArray' вызываем метод resetSearchTextArray
         resetSearchTextArray()
     }
@@ -275,11 +278,26 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Теперь отделяем обработку выбора ячейки для соответвующего обьекта UICollectionView, а именно параметра 'collectionView'
+        switch collectionView {
         
-        let photo = self.photos[indexPath.item]
-        let url = photo.src.large2X
-        
-        let vc = ImageScrollViewController(imageURL: url)
-        self.navigationController?.pushViewController(vc, animated: true)
+        case imageCollectionView:
+            let photo = self.photos[indexPath.item]
+            let url = photo.src.large2X
+            
+            let vc = ImageScrollViewController(imageURL: url)
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        case searchHistoryCollectionView:
+            // Извлекаем текст из массива 'searchTextArray' c соответсвтующим индексом
+            let searchText: String = searchTextArray[indexPath.item]
+            // Для свойства 'text' у 'searchBar' присваеваем ранее извлеченный текст
+            searchBar.text = searchText
+            // Вызываем метод search(), который отправляет запрос для поиска изображений по тексту в поисковой панели
+            search()
+            
+        default:
+            ()
+        }
     }
 }
