@@ -53,7 +53,7 @@ class MainViewController: UIViewController {
         searchHistoryCollectionView.register(UINib(nibName: SearchTextCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: SearchTextCollectionViewCell.identifier)
         searchHistoryCollectionView.dataSource = self
         
-        searchTextArray = getSaveSearchTextArray()
+        resetSearchTextArray()
     }
 
     @objc
@@ -150,17 +150,27 @@ class MainViewController: UIViewController {
     }
     
     func save(searchText: String) {
-        var existingArray: [String] = getSaveSearchTextArray()
+        var existingArray: [String] = getSavedSearchTextArray()
         existingArray.append(searchText)
         
         UserDefaults.standard.set(existingArray, forKey: savedSearchTextArrayKey)
         
-        searchTextArray = existingArray
+        resetSearchTextArray()
     }
     
-    func getSaveSearchTextArray() -> [String] {
+    func getSavedSearchTextArray() -> [String] {
         let array: [String] = UserDefaults.standard.stringArray(forKey: savedSearchTextArrayKey) ?? []
         return array
+    }
+    
+    func getSortedSearchTextArray() -> [String] {
+        let savedSearchTextArray: [String] = getSavedSearchTextArray()
+        let reversedSavedSearchTextArray: [String] = savedSearchTextArray.reversed()
+        return reversedSavedSearchTextArray
+    }
+    
+    func resetSearchTextArray() {
+        self.searchTextArray = getSortedSearchTextArray()
     }
 }
 
