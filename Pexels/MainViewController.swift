@@ -174,7 +174,30 @@ class MainViewController: UIViewController {
     
     // Новый метод, который переопределеяет значение свойства 'searchTextArray' путем присваения полученного значения метода getSortedSearchTextArray()
     func resetSearchTextArray() {
-        self.searchTextArray = getSortedSearchTextArray()
+        // Теперь вместо значения метода getSortedSearchTextArray() присваевается значение другого метода getUniqueSearchTextArray()
+        self.searchTextArray = getUniqueSearchTextArray()
+    }
+    
+    // Новый метод, который возвращает массив из уникальных текстовых запросов на основе полученного массива с помощью метода getSortedSearchTextArray()
+    func getUniqueSearchTextArray() -> [String] {
+        
+        // Создается константа и устанавливается начальное значение, где присваевается возвращаемое значение методом getSortedSearchTextArray()
+        let sortedSearchTextArray: [String] = getSortedSearchTextArray()
+        
+        // Создается пустая переменная для хранения уникальных текстовых запросов
+        var sortedSearchTextArrayWithUniqueValues: [String] = []
+        
+        // Идет итерация по каждомоу элементу массива 'sortedSearchTextArray'
+        sortedSearchTextArray.forEach { searchText in
+            
+            // Идет проверка на отсутствия элемента в массиве 'sortedSearchTextArrayWithUniqueValues'
+            // Метод 'contains' возвращает TRUE если 'searchText' уже содержится в массиве 'sortedSearchTextArrayWithUniqueValues'
+            if !sortedSearchTextArrayWithUniqueValues.contains(searchText) {
+                sortedSearchTextArrayWithUniqueValues.append(searchText)
+            }
+        }
+        // Возвращает массив с уникальныеми текстами
+        return sortedSearchTextArrayWithUniqueValues
     }
 }
 
