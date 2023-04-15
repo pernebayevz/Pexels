@@ -53,6 +53,7 @@ class MainViewController: UIViewController {
         searchHistoryCollectionView.register(UINib(nibName: SearchTextCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: SearchTextCollectionViewCell.identifier)
         searchHistoryCollectionView.dataSource = self
         
+        // Теперь для переопределения значения свойства 'searchTextArray' вызываем метод resetSearchTextArray
         resetSearchTextArray()
     }
 
@@ -155,6 +156,7 @@ class MainViewController: UIViewController {
         
         UserDefaults.standard.set(existingArray, forKey: savedSearchTextArrayKey)
         
+        // Теперь после добавления нового поискового текста вызываем метод resetSearchTextArray(), который извлекает сохраненный список текстовых запросов и присваевает значение свойству 'searchTextArray'
         resetSearchTextArray()
     }
     
@@ -163,12 +165,14 @@ class MainViewController: UIViewController {
         return array
     }
     
+    // Новый метод, который вызывает метод getSavedSearchTextArray() для извлечения массива сохраненных текстов и возвращает тот же массив НО уже в обратном порядке
     func getSortedSearchTextArray() -> [String] {
         let savedSearchTextArray: [String] = getSavedSearchTextArray()
         let reversedSavedSearchTextArray: [String] = savedSearchTextArray.reversed()
         return reversedSavedSearchTextArray
     }
     
+    // Новый метод, который переопределеяет значение свойства 'searchTextArray' путем присваения полученного значения метода getSortedSearchTextArray()
     func resetSearchTextArray() {
         self.searchTextArray = getSortedSearchTextArray()
     }
