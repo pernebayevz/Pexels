@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol SearchTextCollectionViewCellDelegate {
-    func searchTextCollectionViewCell(_ collectionView: UICollectionView, deleteButtonWasTapped indexPath: IndexPath)
-}
-
 class SearchTextCollectionViewCell: UICollectionViewCell {
 
     static let identifier: String = "SearchTextCollectionViewCell"
@@ -18,9 +14,7 @@ class SearchTextCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    var indexPath: IndexPath?
-    var collectionView: UICollectionView?
-    var delegate: SearchTextCollectionViewCellDelegate?
+    var deleteButtonWasTapped: (()->())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,21 +25,14 @@ class SearchTextCollectionViewCell: UICollectionViewCell {
         cardView.layer.cornerRadius = 10
     }
 
-    func set(title: String, delegate: SearchTextCollectionViewCellDelegate, collectionView: UICollectionView, indexPath: IndexPath) {
+    func set(title: String) {
         self.titleLabel.text = title
-        self.delegate = delegate
-        self.indexPath = indexPath
-        self.collectionView = collectionView
     }
     
     @IBAction func deleteButtonTapped(_ sender: UIButton) {
         
         bounce(button: sender) {
-            guard let indexPath = self.indexPath, let collectionView = self.collectionView else {
-                return
-            }
-            
-            self.delegate?.searchTextCollectionViewCell(collectionView, deleteButtonWasTapped: indexPath)
+            self.deleteButtonWasTapped?()
         }
     }
     

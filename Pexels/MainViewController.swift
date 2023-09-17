@@ -266,7 +266,10 @@ extension MainViewController: UICollectionViewDataSource {
             // Извлечение ключевого слова из массива searchTextArray
             let title = searchTextArray[indexPath.item]
             // Вызов метода и передача всех необходимых параметров
-            cell.set(title: title, delegate: self, collectionView: collectionView, indexPath: indexPath)
+            cell.set(title: title)
+            cell.deleteButtonWasTapped = {
+                self.deleteContact(at: indexPath.item)
+            }
             return cell
             
         default:
@@ -309,12 +312,5 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         default:
             ()
         }
-    }
-}
-
-extension MainViewController: SearchTextCollectionViewCellDelegate {
-    
-    func searchTextCollectionViewCell(_ collectionView: UICollectionView, deleteButtonWasTapped indexPath: IndexPath) {
-        deleteContact(at: indexPath.item)
     }
 }
