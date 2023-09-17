@@ -202,6 +202,13 @@ class MainViewController: UIViewController {
         // Возвращает массив с уникальныеми текстами
         return sortedSearchTextArrayWithUniqueValues
     }
+    
+    func deleteContact(at index: Int) {
+        // Удаление ключевого слова в указанным индексе из объекта searchTextArray
+        searchTextArray.remove(at: index)
+        // Переопределение значения под ключем "savedSearchTextArrayKey", а именно на значение объекта searchTextArray без ранее удаленного ключевого слова
+        UserDefaults.standard.set(searchTextArray, forKey: savedSearchTextArrayKey)
+    }
 }
 
 extension MainViewController: UISearchBarDelegate {
@@ -256,7 +263,10 @@ extension MainViewController: UICollectionViewDataSource {
         case searchHistoryCollectionView:
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchTextCollectionViewCell.identifier, for: indexPath) as! SearchTextCollectionViewCell
-            cell.set(title: searchTextArray[indexPath.item])
+            // Извлечение ключевого слова из массива searchTextArray
+            let title = searchTextArray[indexPath.item]
+            // Вызов метода и передача всех необходимых параметров
+            cell.set(title: title, delegate: self, collectionView: collectionView, indexPath: indexPath)
             return cell
             
         default:
@@ -299,5 +309,12 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         default:
             ()
         }
+    }
+}
+
+extension MainViewController: SearchTextCollectionViewCellDelegate {
+    
+    func searchTextCollectionViewCell(_ collectionView: UICollectionView, deleteButtonWasTapped indexPath: IndexPath) {
+        deleteContact(at: indexPath.item)
     }
 }
