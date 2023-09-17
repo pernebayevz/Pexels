@@ -12,6 +12,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchHistoryCollectionView: UICollectionView!
     @IBOutlet weak var imageCollectionView: UICollectionView!
+    @IBOutlet weak var searchHistoryCollectionViewHeightConstraint: NSLayoutConstraint!
     
     var searchPhotosResponse: SearchPhotosResponse? {
         didSet {
@@ -27,6 +28,7 @@ class MainViewController: UIViewController {
     var searchTextArray: [String] = [] {
         didSet {
             searchHistoryCollectionView.reloadData()
+            showSearchHistorySectionIfNeeded()
         }
     }
     
@@ -208,6 +210,33 @@ class MainViewController: UIViewController {
         searchTextArray.remove(at: index)
         // Переопределение значения под ключем "savedSearchTextArrayKey", а именно на значение объекта searchTextArray без ранее удаленного ключевого слова
         UserDefaults.standard.set(searchTextArray, forKey: savedSearchTextArrayKey)
+    }
+    
+    // Функция для отображения или скрытия раздела истории поиска в зависимости от условий.
+    func showSearchHistorySectionIfNeeded() {
+        
+        // Проверяем, если количество элементов в массиве истории поиска больше 0 и текущая высота коллекции истории поиска не равна 60.
+        if searchTextArray.count > 0 && self.searchHistoryCollectionViewHeightConstraint.constant != 60 {
+            // Устанавливаем высоту коллекции истории поиска равной 60.
+            self.searchHistoryCollectionViewHeightConstraint.constant = 60
+            
+            // Анимируем изменение высоты коллекции истории поиска.
+            UIView.animate(withDuration: 0.3) {
+                // Применяем изменения макета, чтобы увидеть анимацию изменения высоты.
+                self.view.layoutIfNeeded()
+            }
+        }
+        // Проверяем, если количество элементов в массиве истории поиска меньше 1 и текущая высота коллекции истории поиска не равна 0.
+        else if searchTextArray.count < 1 && self.searchHistoryCollectionViewHeightConstraint.constant != 0 {
+            // Устанавливаем высоту коллекции истории поиска равной 0.
+            self.searchHistoryCollectionViewHeightConstraint.constant = 0
+            
+            // Анимируем изменение высоты коллекции истории поиска.
+            UIView.animate(withDuration: 0.3) {
+                // Применяем изменения макета, чтобы увидеть анимацию изменения высоты.
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 }
 
